@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.container.name }}-{{ .Values.environment }}
+  labels:
+    app: {{ .Values.container.name }}
+  annotations:
+    mygo/owner: {{ .Values.owner }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.container.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.container.name }}
+    spec:
+      containers:
+      - name: {{ .Values.container.name }}
+        image: {{ .Values.container.image }}:{{ .Values.container.tag }}
+        ports: 
+        - containerPort: {{ .Values.container.port }}
+        env:
+        - name: ENVIRONMENT
+          value: {{ .Values.environment }}
+        resources:
+          requests:
+            cpu: {{ .Values.container.cpu_request }}
+            memory: {{ .Values.container.memory_request }}
+          limits:
+            cpu: {{ .Values.container.cpu_limit }}
+            memory: {{ .Values.container.memory_limit }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.container.port }}
+          initialDelaySeconds: {{ .Values.container.delay }}
+          periodSeconds: {{ .Values.container.delay }}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.container.port }}
+          initialDelaySeconds: {{ .Values.container.delay }}
+          periodSeconds: {{ .Values.container.delay }} 

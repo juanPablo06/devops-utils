@@ -1,0 +1,4 @@
+name: mygo
+sources:
+  - https://github.com/juanPablo06/devops-utils/
+version: 0.1.0

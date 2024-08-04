@@ -1,0 +1,13 @@
+owner: juanPablo06
+environment: dev
+container:
+  name: mygo
+  port: 8888
+  image: whone01/mygo
+  tag: latest
+  cpu_request: 100m
+  memory_request: 10Mi
+  cpu_limit: 200m
+  memory_limit: 20Mi
+  delay: 10
+replicas: 3
